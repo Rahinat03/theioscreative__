@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ================================================================
+     Theios Creative - XML Sitemap
+     Created: 2026-06-12
+     Purpose: Help search engines discover and index all pages
+     ================================================================ -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://theioscreative.com/</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Services Page -->
+  <url>
+    <loc>https://theioscreative.com/services.html</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- About Page -->
+  <url>
+    <loc>https://theioscreative.com/about.html</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Contact Page -->
+  <url>
+    <loc>https://theioscreative.com/contact.html</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!--
+  INSTRUCTIONS FOR FUTURE UPDATES:
+
+  1. Update lastmod dates when pages change
+  2. Add new pages as you create them (blog posts, portfolio items, etc.)
+  3. Priority values: 1.0 (highest) to 0.0 (lowest)
+  4. Changefreq values: always, hourly, daily, weekly, monthly, yearly, never
+  5. Submit updated sitemap to Google Search Console after changes
+
+  Example for blog post:
+  <url>
+    <loc>https://theioscreative.com/blog/post-title.html</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  -->
+
+</urlset>

@@ -1,0 +1,534 @@
+/* ── ABOUT PAGE STYLES ────────────────────────── */
+
+/* Reuse page-hero base from services */
+.page-hero {
+    position: relative;
+    background: var(--teal-deeper);
+    overflow: hidden;
+}
+
+.page-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.bg-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(78, 205, 196, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(78, 205, 196, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+/* About Hero */
+.about-hero {
+    padding: 10rem 0 6rem;
+}
+
+.about-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.about-hero-text h1 {
+    color: var(--white);
+    margin: 0.75rem 0 1.5rem;
+}
+
+.about-hero-text .lead {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.about-hero-image {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: visible;
+}
+
+.about-hero-image img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.about-hero-accent {
+    position: absolute;
+    bottom: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: var(--teal-deeper);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    white-space: nowrap;
+}
+
+/* ── Philosophy ────────────────────────────────── */
+.philosophy {
+    background: var(--white);
+}
+
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.phil-card {
+    background: var(--teal-deeper);
+    border-radius: var(--radius-md);
+    padding: 3rem 2.5rem;
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.phil-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.phil-card--accent {
+    background: var(--accent);
+}
+
+.phil-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.8rem;
+    color: var(--accent);
+}
+
+.phil-card--accent .phil-icon {
+    background: rgba(48, 100, 96, 0.15);
+    color: var(--teal-deeper);
+}
+
+.phil-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.phil-card h3 {
+    color: var(--white);
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+}
+
+.phil-card p {
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 100%;
+}
+
+/* ── Timeline / Process ────────────────────────── */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.timeline-step {
+    display: grid;
+    grid-template-columns: 80px 60px 1fr;
+    gap: 0 1.5rem;
+    align-items: start;
+    padding-bottom: 3rem;
+}
+
+.ts-number {
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--grey-light);
+    line-height: 1;
+    text-align: right;
+    padding-top: 0.2rem;
+    user-select: none;
+}
+
+.ts-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0.6rem;
+}
+
+.ts-dot {
+    width: 16px;
+    height: 16px;
+    background: var(--teal-primary);
+    border-radius: 50%;
+    border: 3px solid var(--white);
+    box-shadow: 0 0 0 3px var(--teal-primary);
+    flex-shrink: 0;
+    animation: pulse-glow 2.5s infinite;
+}
+
+.ts-dot--last {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent);
+}
+
+.ts-line {
+    width: 2px;
+    flex: 1;
+    background: linear-gradient(to bottom, var(--teal-primary), var(--grey-light));
+    min-height: 80px;
+    margin-top: 0.5rem;
+}
+
+.ts-line--last {
+    background: linear-gradient(to bottom, var(--grey-light), transparent);
+}
+
+.ts-content {
+    padding-top: 0;
+}
+
+.ts-icon {
+    width: 52px;
+    height: 52px;
+    background: var(--accent-glow);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--teal-primary);
+    margin-bottom: 1rem;
+}
+
+.ts-icon--accent {
+    background: var(--teal-primary);
+    color: var(--white);
+}
+
+.ts-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.ts-content h3 {
+    font-size: 2rem;
+    margin: 0.3rem 0 0.8rem;
+}
+
+.ts-bullets {
+    margin-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ts-bullets li {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    padding-left: 1.2rem;
+    position: relative;
+    font-weight: 500;
+}
+
+.ts-bullets li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--teal-primary);
+    font-size: 0.6rem;
+    top: 0.2rem;
+}
+
+/* ── Brand Philosophy ──────────────────────────── */
+.brand-philosophy {
+    background: var(--teal-deeper);
+}
+
+.bp-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+}
+
+.bp-quote {
+    position: relative;
+}
+
+.bp-quote-mark {
+    font-family: var(--font-heading);
+    font-size: 10rem;
+    color: rgba(78, 205, 196, 0.15);
+    line-height: 0.6;
+    position: absolute;
+    top: 0;
+    left: -1.5rem;
+    user-select: none;
+}
+
+blockquote {
+    font-family: var(--font-heading);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1.35;
+    position: relative;
+    z-index: 2;
+}
+
+blockquote strong {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+cite {
+    display: block;
+    margin-top: 1.5rem;
+    font-size: 0.82rem;
+    color: var(--accent);
+    font-style: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.bp-details h2 {
+    color: var(--white);
+}
+
+.bp-details p {
+    color: var(--grey-mid);
+}
+
+/* ── Responsive ──────────────────────────── */
+@media(max-width: 968px) {
+    .about-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .philosophy-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-step {
+        grid-template-columns: 50px 50px 1fr;
+        gap: 0 1rem;
+    }
+
+    .ts-number {
+        font-size: 3.5rem;
+    }
+
+    .bp-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin-inline: auto;
+    }
+}
+
+@media(max-width: 640px) {
+    .timeline-step {
+        grid-template-columns: auto;
+        gap: 0.75rem;
+    }
+
+    .ts-number {
+        display: none;
+    }
+
+    .ts-connector {
+        display: none;
+    }
+
+    .about-hero {
+        padding: 8rem 0 4rem;
+    }
+
+    .about-hero-text .lead {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .phil-card {
+        padding: 2.3rem 1.6rem;
+    }
+
+    .phil-card h3 {
+        font-size: 1.4rem;
+    }
+
+    .ts-content h3 {
+        font-size: 1.55rem;
+    }
+
+    .team-card {
+        flex-direction: column;
+    }
+
+    .team-info {
+        padding: 1.6rem 1.4rem 1.8rem;
+    }
+}
+
+@media(max-width: 420px) {
+    .team-name {
+        font-size: 1.35rem;
+    }
+
+    .team-bio {
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+}
+
+/* ── Team Section ───────────────────────────── */
+.team-section {
+    background: var(--off-white);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.team-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--grey-light);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+}
+
+/* Portrait area */
+.team-portrait-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--teal-primary), var(--teal-light));
+}
+
+/* Real photo — just swap src on the img tag and remove placeholder div */
+.team-portrait-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.6s ease;
+    display: block;
+}
+
+.team-card:hover .team-portrait-wrap img {
+    transform: scale(1.05);
+}
+
+/* Initials placeholder (used until real photo is swapped in) */
+.team-portrait-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, var(--teal-primary) 0%, var(--teal-light) 60%, #5ba8a2 100%);
+    position: relative;
+}
+
+.team-portrait-placeholder--alt {
+    background: linear-gradient(145deg, var(--teal-deeper) 0%, var(--teal-primary) 60%, var(--teal-light) 100%);
+}
+
+.team-initials {
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.22);
+    letter-spacing: 0.05em;
+    user-select: none;
+    line-height: 1;
+}
+
+/* Decorative bottom-edge accent bar */
+.team-portrait-accent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+}
+
+.team-portrait-accent--alt {
+    background: linear-gradient(90deg, var(--teal-deeper), var(--teal-primary));
+}
+
+/* Info area */
+.team-info {
+    padding: 2rem 2.2rem 2.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.team-name {
+    font-family: var(--font-heading);
+    font-size: 1.55rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin: 0;
+}
+
+.team-role {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-primary);
+}
+
+.team-divider {
+    width: 40px;
+    height: 2.5px;
+    background: linear-gradient(90deg, var(--teal-primary), var(--accent));
+    border-radius: 2px;
+    margin: 0.6rem 0;
+}
+
+.team-bio {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 100%;
+    margin: 0;
+}

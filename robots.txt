@@ -1,0 +1,63 @@
+# ================================================================
+# Theios Creative - Robots.txt
+# Created: 2026-06-12
+# Purpose: Guide search engine crawlers
+# ================================================================
+
+# Allow all crawlers to access all content
+User-agent: *
+Allow: /
+
+# Disallow crawling of asset directories (improve crawl efficiency)
+Disallow: /assets/css/
+Disallow: /assets/js/
+Disallow: /assets/fonts/
+
+# Disallow crawling of system files
+Disallow: /.git/
+Disallow: /.htaccess
+Disallow: /*.md$
+
+# Sitemap location
+# NOTE: Update domain to actual production URL
+Sitemap: https://theioscreative.com/sitemap.xml
+
+# Crawl delay (optional - reduces server load)
+# Uncomment if experiencing high crawler traffic
+# Crawl-delay: 1
+
+# ────────────────────────────────────────────────────────────────
+# SPECIFIC CRAWLER RULES
+# ────────────────────────────────────────────────────────────────
+
+# Google Bot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# Google Images
+User-agent: Googlebot-Image
+Allow: /assets/images/
+
+# Google Mobile
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Block bad bots (optional - uncomment if needed)
+# User-agent: AhrefsBot
+# Disallow: /
+
+# User-agent: SemrushBot
+# Disallow: /
+
+# User-agent: MJ12bot
+# Disallow: /
+
+# ================================================================
+# END OF ROBOTS.TXT
+# ================================================================
