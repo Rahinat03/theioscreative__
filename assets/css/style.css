@@ -357,7 +357,7 @@ p {
 
 /* Real TC logo image */
 .nav-logo-img {
-  height: 72px;
+  height: 50px;
   width: auto;
 
   border-radius: 10px;
@@ -369,17 +369,17 @@ p {
 .nav-logo-textmark {
   display: inline-flex;
   align-items: center;
-  height: 46px;
+  height: 50px;
   padding-left: 0.05rem;
 
   font-family: var(--font-heading);
-  font-weight: 400;
+  font-weight: 700;
   color: var(--accent);
-  font-size: 2.55rem;
+  font-size: 3rem;
   letter-spacing: 0.01em;
   text-transform: capitalize; /* only first letter per word */
 
-  font-style: italic;
+  font-style: normal;
   white-space: nowrap;
   transform: translateY(-2px);
 }
@@ -969,11 +969,11 @@ p {
   }
 
   .nav-logo-img {
-    height: 60px;
+    height: 44px;
   }
 
   .navbar.scrolled .nav-logo-img {
-    height: 50px;
+    height: 38px;
   }
 
   .nav-links {
@@ -1093,7 +1093,7 @@ p {
   }
 
   .nav-logo-img {
-    height: 52px;
+    height: 36px;
   }
 
   .nav-logo-textmark {
