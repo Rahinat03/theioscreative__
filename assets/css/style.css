@@ -762,6 +762,16 @@ p {
   margin-bottom: 4rem;
 }
 
+.footer-wordmark {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
 .footer-brand p {
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.92rem;
