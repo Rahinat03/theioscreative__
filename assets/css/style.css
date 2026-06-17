@@ -375,9 +375,9 @@ p {
   font-family: var(--font-heading);
   font-weight: 700;
   color: var(--accent);
-  font-size: 3rem;
+  font-size: 1.7rem;
   letter-spacing: 0.01em;
-  text-transform: capitalize; /* only first letter per word */
+  text-transform: uppercase;
 
   font-style: normal;
   white-space: nowrap;
@@ -1066,7 +1066,7 @@ p {
 
   /* Reduce navbar brand text on mobile so it fits */
   .nav-logo-textmark {
-    font-size: 1.1rem;
+    font-size: 1.45rem;
   }
 }
 
@@ -1097,7 +1097,7 @@ p {
   }
 
   .nav-logo-textmark {
-    font-size: 0.95rem;
+    font-size: 1.2rem;
   }
 
   .mobile-menu {
