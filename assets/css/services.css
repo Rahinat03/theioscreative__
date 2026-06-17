@@ -238,7 +238,7 @@
 }
 
 .pi-tags span {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -357,7 +357,7 @@
     left: 1rem;
     background: var(--accent);
     color: var(--teal-deeper);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -409,11 +409,11 @@
 }
 
 .bc-label {
-    font-size: 0.72rem;
+    font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.85);
     margin-bottom: 0.5rem;
 }
 
@@ -427,7 +427,7 @@
 
 .bc-sub {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.85);
     margin-top: 0.5rem;
 }
 

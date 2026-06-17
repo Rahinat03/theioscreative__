@@ -110,39 +110,106 @@
           <!-- Stats strip -->
           <div class="hero-stats reveal reveal-delay-4">
             <div class="stat">
-              <span class="stat-num" data-count="50" data-suffix="+">0</span>
+              <span class="stat-num" data-count="15" data-suffix="+">0</span>
               <span class="stat-label">Brands Built</span>
             </div>
             <div class="stat-divider"></div>
             <div class="stat">
-              <span class="stat-num" data-count="3" data-suffix="">0</span>
-              <span class="stat-label">Core Portfolios</span>
+              <span class="stat-num" data-count="25" data-suffix="+">0</span>
+              <span class="stat-label">Projects Delivered</span>
             </div>
             <div class="stat-divider"></div>
             <div class="stat">
-              <span class="stat-num" data-count="100" data-suffix="%">0</span>
-              <span class="stat-label">Divine Quality</span>
+              <span class="stat-num" data-count="98" data-suffix="%">0</span>
+              <span class="stat-label">Client Satisfaction</span>
             </div>
           </div>
         </div>
       </div>
 
       <div class="hero-right">
-        <div class="hero-image-wrap animate-float">
-          <img src="assets/images/hero_workspace.png"
-            alt="Professional Theios Creative workspace with teal design aesthetic" class="hero-img" />
-          <!-- Floating badge -->
-          <div class="hero-badge">
-            <div class="hero-badge-icon">✦</div>
-            <div>
-              <strong>Strategy-First</strong>
-              <span>Creative Execution</span>
-            </div>
+      <!-- Ambient orbs (kept) -->
+      <div class="orb orb-1" aria-hidden="true"></div>
+      <div class="orb orb-2" aria-hidden="true"></div>
+
+      <!-- Orbit Universe -->
+      <div class="orbit-universe" id="orbitUniverse">
+        <div class="orbit-system" id="orbitSystem" aria-label="Theios Creative service capabilities">
+
+          <!-- Center Core -->
+          <div class="orbit-core">
+            <div class="orbit-core-ring"></div>
+            <div class="orbit-core-ring orbit-core-ring--2"></div>
+            <img src="assets/images/TC_logo.png" alt="Theios Creative" class="orbit-core-logo">
           </div>
+
+          <!-- Ring 1: Consulting — innermost, fastest, CW -->
+          <div class="orbit-ring ring-1">
+            <div class="ring-card-anchor">
+              <article class="orbit-card" data-service="consulting">
+                <span class="orbit-card-icon">◈</span>
+                <div class="orbit-card-text">
+                  <span class="orbit-card-label">Consulting</span>
+                  <span class="orbit-card-sub">Strategy & Registration</span>
+                </div>
+              </article>
+            </div>
+            <span class="ring-particle rp-a"></span>
+            <span class="ring-particle rp-b"></span>
+          </div>
+
+          <!-- Ring 2: Identity — CCW -->
+          <div class="orbit-ring ring-2">
+            <div class="ring-card-anchor">
+              <article class="orbit-card" data-service="identity">
+                <span class="orbit-card-icon">◈</span>
+                <div class="orbit-card-text">
+                  <span class="orbit-card-label">Identity</span>
+                  <span class="orbit-card-sub">Brand & Visual Design</span>
+                </div>
+              </article>
+            </div>
+            <span class="ring-particle rp-a"></span>
+            <span class="ring-particle rp-b"></span>
+            <span class="ring-particle rp-c"></span>
+          </div>
+
+          <!-- Ring 3: Content — CW -->
+          <div class="orbit-ring ring-3">
+            <div class="ring-card-anchor">
+              <article class="orbit-card" data-service="content">
+                <span class="orbit-card-icon">◈</span>
+                <div class="orbit-card-text">
+                  <span class="orbit-card-label">Content</span>
+                  <span class="orbit-card-sub">Motion & Social Media</span>
+                </div>
+              </article>
+            </div>
+            <span class="ring-particle rp-a"></span>
+            <span class="ring-particle rp-b"></span>
+          </div>
+
+          <!-- Ring 4: Digital — outermost, slowest, CCW -->
+          <div class="orbit-ring ring-4">
+            <div class="ring-card-anchor">
+              <article class="orbit-card" data-service="digital">
+                <span class="orbit-card-icon">◈</span>
+                <div class="orbit-card-text">
+                  <span class="orbit-card-label">Digital</span>
+                  <span class="orbit-card-sub">Web & E-Commerce</span>
+                </div>
+              </article>
+            </div>
+            <span class="ring-particle rp-a"></span>
+            <span class="ring-particle rp-b"></span>
+            <span class="ring-particle rp-c"></span>
+          </div>
+
+          <!-- Dynamic SVG connector lines (drawn by JS) -->
+          <svg class="orbit-connectors" id="orbitConnectors" aria-hidden="true"></svg>
+
         </div>
-        <!-- Decorative orbs -->
-        <div class="orb orb-1" aria-hidden="true"></div>
-        <div class="orb orb-2" aria-hidden="true"></div>
+      </div>
       </div>
     </section>
 

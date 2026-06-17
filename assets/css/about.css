@@ -310,7 +310,7 @@ cite {
 }
 
 .bp-details p {
-    color: var(--grey-mid);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 /* ── Responsive ──────────────────────────── */
