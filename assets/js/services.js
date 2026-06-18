@@ -118,125 +118,126 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') closeModal();
   });
 
-    // ── iOS card stack — scroll-driven reveal/hide (mobile) ─────
+    // ── iOS card stack — sticky scroll-through reveal (mobile) ──
     (function initCardStack() {
-        var mq        = window.matchMedia('(max-width: 968px)');
-        var panels    = document.querySelector('.service-panels');
+        var STICKY_TOP = 80; // px — clears the fixed nav
+
+        var mq     = window.matchMedia('(max-width: 968px)');
+        var panels = document.querySelector('.service-panels');
         if (!panels) return;
 
-        var cards     = Array.from(panels.querySelectorAll(':scope > .sp-card'));
+        var cards = Array.from(panels.querySelectorAll(':scope > .sp-card'));
         if (cards.length < 3) return;
 
-        var expandBtn = null;
-        var scrollObs = null;
+        var wrapper        = null;
+        var scrollListener = null;
+        var rafPending     = false;
+        var h0, h1, revealedH, revealDist;
 
-        // ── Collapse into stack (instant — no transition) ────────
-        function buildStack() {
+        function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+        function lerp(a, b, t)    { return a + (b - a) * clamp(t, 0, 1); }
+
+        // ── Measure cards in their natural revealed layout ───────
+        function measureCards() {
+            panels.style.cssText = '';
             cards.forEach(function(c) { c.removeAttribute('style'); });
-            panels.classList.remove('stack-init', 'stack-open');
+            void panels.offsetHeight;
+            h0        = cards[0].offsetHeight;
+            h1        = cards[1].offsetHeight;
+            revealedH = panels.offsetHeight;
+        }
 
-            void panels.offsetHeight; // flush reflow before measuring
+        // ── Drive card positions from scroll progress (0 → 1) ────
+        //   progress 0 → 0.5 : card 2 slides out from behind card 1
+        //   progress 0.5 → 1 : card 3 slides out from behind card 2
+        function applyProgress(p) {
+            var p2  = clamp(p / 0.5, 0, 1);
+            var p3  = clamp((p - 0.5) / 0.5, 0, 1);
 
-            var h0 = cards[0].offsetHeight;
-            var h1 = cards[1].offsetHeight;
+            var mt2 = lerp(-(h0 - 20), 16, p2);
+            var s2  = lerp(0.96, 1, p2);
+            var ml2 = lerp(0.4, 0, p2);
 
-            cards[0].style.cssText = 'position:relative;z-index:3;';
+            var mt3 = lerp(-(h1 - 12), 16, p3);
+            var s3  = lerp(0.92, 1, p3);
+            var ml3 = lerp(0.8, 0, p3);
+
+            cards[0].style.cssText =
+                'position:relative;z-index:3;';
             cards[1].style.cssText =
                 'position:relative;z-index:2;' +
-                'margin-top:-' + (h0 - 20) + 'px;' +
-                'margin-left:0.4rem;margin-right:0.4rem;' +
-                'transform:scale(0.96);transform-origin:top center;';
+                'margin-top:'   + mt2.toFixed(1) + 'px;' +
+                'margin-left:'  + ml2.toFixed(3) + 'rem;' +
+                'margin-right:' + ml2.toFixed(3) + 'rem;' +
+                'transform:scale(' + s2.toFixed(4) + ');transform-origin:top center;';
             cards[2].style.cssText =
                 'position:relative;z-index:1;' +
-                'margin-top:-' + (h1 - 12) + 'px;' +
-                'margin-left:0.8rem;margin-right:0.8rem;' +
-                'transform:scale(0.92);transform-origin:top center;';
-
-            panels.classList.add('stack-init');
-
-            // Show or create the expand button
-            if (expandBtn) {
-                expandBtn.style.display = '';
-                expandBtn.setAttribute('aria-expanded', 'false');
-                if (!expandBtn.isConnected) {
-                    panels.insertAdjacentElement('afterend', expandBtn);
-                }
-            } else {
-                expandBtn = document.createElement('button');
-                expandBtn.className = 'stack-expand-btn';
-                expandBtn.setAttribute('aria-expanded', 'false');
-                expandBtn.setAttribute('aria-label', 'View all services');
-                expandBtn.innerHTML =
-                    'View All Services' +
-                    '&nbsp;<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
-                    ' stroke-width="2.5" width="14" height="14" aria-hidden="true">' +
-                    '<polyline points="6 9 12 15 18 9"/></svg>';
-                panels.insertAdjacentElement('afterend', expandBtn);
-                expandBtn.addEventListener('click', openStack);
-            }
+                'margin-top:'   + mt3.toFixed(1) + 'px;' +
+                'margin-left:'  + ml3.toFixed(3) + 'rem;' +
+                'margin-right:' + ml3.toFixed(3) + 'rem;' +
+                'transform:scale(' + s3.toFixed(4) + ');transform-origin:top center;';
         }
 
-        // ── Fan cards out (animated via CSS transition) ──────────
-        function openStack() {
-            if (!panels.classList.contains('stack-init')) return;
+        // ── Wrap panels in a scroll-track and make them sticky ───
+        function buildScrollJack() {
+            if (wrapper) return; // guard: prevent double-wrap on repeated mq changes
+            measureCards();
+            // ~65 % of viewport height per card reveal, cap at 320 px
+            revealDist = Math.round(Math.min(window.innerHeight * 0.65, 320));
 
-            panels.classList.remove('stack-init');
-            panels.classList.add('stack-open');
+            wrapper = document.createElement('div');
+            wrapper.className = 'sp-scroll-track';
+            panels.parentNode.insertBefore(wrapper, panels);
+            wrapper.appendChild(panels);
 
-            cards[0].style.position = '';
-            cards[0].style.zIndex   = '';
+            // Track height: full revealed height + scroll room for 2 card reveals
+            wrapper.style.position = 'relative';
+            wrapper.style.height   = (revealedH + revealDist * 2) + 'px';
 
-            var props = ['marginTop','marginLeft','marginRight','transform','transformOrigin','zIndex','position'];
-            props.forEach(function(p) {
-                cards[1].style[p] = '';
-                cards[2].style[p] = '';
-            });
+            panels.style.position = 'sticky';
+            panels.style.top      = STICKY_TOP + 'px';
 
-            if (expandBtn) {
-                expandBtn.setAttribute('aria-expanded', 'true');
-                expandBtn.style.display = 'none';
-            }
-        }
+            // Set initial stacked state
+            applyProgress(0);
 
-        // ── Scroll observer: reveal on scroll down, re-stack on scroll up ──
-        function setupObserver() {
-            if (scrollObs) scrollObs.disconnect();
-
-            scrollObs = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
-                        // Stack scrolled 30 % into view → fan out
-                        openStack();
-                    } else if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
-                        // Fully out of view AND element is still below the viewport
-                        // = user scrolled back up above the section → re-stack
-                        buildStack();
-                    }
-                    // When scrolling PAST (top < 0) leave the cards expanded
+            scrollListener = function() {
+                if (rafPending) return;
+                rafPending = true;
+                requestAnimationFrame(function() {
+                    rafPending = false;
+                    if (!wrapper) return; // guard: destroyed between scroll event and rAF
+                    // Progress 0 when wrapper.top === STICKY_TOP (just became sticky)
+                    // Progress 1 after scrolling revealDist*2 past that point
+                    var wt = wrapper.getBoundingClientRect().top;
+                    applyProgress(clamp((STICKY_TOP - wt) / (revealDist * 2), 0, 1));
                 });
-            }, { threshold: [0, 0.3] });
-
-            scrollObs.observe(panels);
+            };
+            window.addEventListener('scroll', scrollListener, { passive: true });
+            scrollListener(); // apply based on current scroll position
         }
 
-        // ── Clean up all stack state ─────────────────────────────
-        function destroyStack() {
-            if (scrollObs) { scrollObs.disconnect(); scrollObs = null; }
-            panels.classList.remove('stack-init', 'stack-open');
+        // ── Remove all scroll-jack state ─────────────────────────
+        function destroyScrollJack() {
+            if (scrollListener) {
+                window.removeEventListener('scroll', scrollListener);
+                scrollListener = null;
+            }
+            if (wrapper && wrapper.parentNode) {
+                wrapper.parentNode.insertBefore(panels, wrapper);
+                wrapper.remove();
+            }
+            wrapper    = null;
+            rafPending = false;
+            panels.style.position = '';
+            panels.style.top      = '';
             cards.forEach(function(c) { c.removeAttribute('style'); });
-            if (expandBtn) { expandBtn.remove(); expandBtn = null; }
         }
 
-        // Tapping the stack also expands it (belt-and-braces)
-        panels.addEventListener('click', function() {
-            if (panels.classList.contains('stack-init')) openStack();
-        });
-
-        if (mq.matches) { buildStack(); setupObserver(); }
+        if (mq.matches) { buildScrollJack(); }
 
         mq.addEventListener('change', function(e) {
-            if (e.matches) { buildStack(); setupObserver(); }
-            else            { destroyStack(); }
+            if (e.matches) { buildScrollJack(); }
+            else            { destroyScrollJack(); }
         });
     })();
 
