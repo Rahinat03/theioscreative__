@@ -77,6 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(backdrop);
   }
 
+  // Mobile Services accordion — declared here so closeMenu can reference them
+  var servicesToggle = mobileMenu ? mobileMenu.querySelector('.mobile-services-toggle') : null;
+  var subMenu = mobileMenu ? mobileMenu.querySelector('.mobile-sub-menu') : null;
+
   if (toggle && mobileMenu) {
 
     const openMenu = () => {
@@ -96,6 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
       toggle.setAttribute('aria-expanded', 'false');
       navbar && navbar.classList.remove('menu-open');
       toggle.focus();
+      if (subMenu) { subMenu.classList.remove('open'); }
+      if (servicesToggle) { servicesToggle.setAttribute('aria-expanded', 'false'); }
     };
 
     toggle.addEventListener('click', () => {
@@ -107,6 +113,16 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', closeMenu);
     });
+
+    // Mobile Services accordion toggle
+    if (servicesToggle && subMenu) {
+      servicesToggle.addEventListener('click', function(e) {
+        e.stopPropagation(); // prevent any parent handlers
+        var isOpen = subMenu.classList.contains('open');
+        subMenu.classList.toggle('open');
+        servicesToggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      });
+    }
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && toggle.classList.contains('open')) closeMenu();

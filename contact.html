@@ -48,7 +48,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="assets/css/style.css?v=5" />
+    <link rel="stylesheet" href="assets/css/style.css?v=6" />
     <link rel="stylesheet" href="assets/css/contact.css?v=2" />
 </head>
 
@@ -95,10 +95,21 @@
 
     <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
         <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="identity.html" class="mobile-sub-link">Brand Identity</a>
-        <a href="content.html" class="mobile-sub-link">Content Creation</a>
-        <a href="digital.html" class="mobile-sub-link">Web Development</a>
+        <div class="mobile-services-group">
+          <div class="mobile-services-row">
+            <a href="services.html" class="mobile-services-link">Services</a>
+            <button class="mobile-services-toggle" aria-expanded="false" aria-label="Toggle Services sub-menu" type="button">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div class="mobile-sub-menu" role="list">
+            <a href="identity.html" class="mobile-sub-link" role="listitem">Brand Identity</a>
+            <a href="content.html" class="mobile-sub-link" role="listitem">Content Creation</a>
+            <a href="digital.html" class="mobile-sub-link" role="listitem">Web Development</a>
+          </div>
+        </div>
         <a href="about.html">About Us</a>
         <a href="contact.html">Contact</a>
     </div>
@@ -503,7 +514,7 @@
     }
     </script>
 
-    <script src="assets/js/main.js?v=5"></script>
+    <script src="assets/js/main.js?v=6"></script>
     <script src="assets/js/contact.js?v=2"></script>
 </body>
 
