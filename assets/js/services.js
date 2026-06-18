@@ -118,121 +118,125 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') closeModal();
   });
 
-    // ── iOS notification-style card stack (mobile) ───────────────
+    // ── iOS card stack — scroll-driven reveal/hide (mobile) ─────
     (function initCardStack() {
-        const mq = window.matchMedia('(max-width: 968px)');
-        const panels = document.querySelector('.service-panels');
+        var mq        = window.matchMedia('(max-width: 968px)');
+        var panels    = document.querySelector('.service-panels');
         if (!panels) return;
 
-        const cards = Array.from(panels.querySelectorAll(':scope > .sp-card'));
-        if (cards.length < 2) return;
+        var cards     = Array.from(panels.querySelectorAll(':scope > .sp-card'));
+        if (cards.length < 3) return;
 
-        let expandBtn = null;
+        var expandBtn = null;
+        var scrollObs = null;
 
+        // ── Collapse into stack (instant — no transition) ────────
         function buildStack() {
-            // Reset any existing inline styles so we can remeasure cleanly
             cards.forEach(function(c) { c.removeAttribute('style'); });
             panels.classList.remove('stack-init', 'stack-open');
 
-            // Measure natural card heights
+            void panels.offsetHeight; // flush reflow before measuring
+
             var h0 = cards[0].offsetHeight;
             var h1 = cards[1].offsetHeight;
 
-            // Card 1 — front of the stack (full size)
-            cards[0].style.position = 'relative';
-            cards[0].style.zIndex   = '3';
+            cards[0].style.cssText = 'position:relative;z-index:3;';
+            cards[1].style.cssText =
+                'position:relative;z-index:2;' +
+                'margin-top:-' + (h0 - 20) + 'px;' +
+                'margin-left:0.4rem;margin-right:0.4rem;' +
+                'transform:scale(0.96);transform-origin:top center;';
+            cards[2].style.cssText =
+                'position:relative;z-index:1;' +
+                'margin-top:-' + (h1 - 12) + 'px;' +
+                'margin-left:0.8rem;margin-right:0.8rem;' +
+                'transform:scale(0.92);transform-origin:top center;';
 
-            // Card 2 — second layer: peeks 20 px below card 1
-            cards[1].style.position        = 'relative';
-            cards[1].style.zIndex          = '2';
-            cards[1].style.marginTop       = '-' + (h0 - 20) + 'px';
-            cards[1].style.marginLeft      = '0.4rem';
-            cards[1].style.marginRight     = '0.4rem';
-            cards[1].style.transform       = 'scale(0.96)';
-            cards[1].style.transformOrigin = 'top center';
-
-            // Card 3 — back of the stack: peeks 12 px below card 2
-            cards[2].style.position        = 'relative';
-            cards[2].style.zIndex          = '1';
-            cards[2].style.marginTop       = '-' + (h1 - 12) + 'px';
-            cards[2].style.marginLeft      = '0.8rem';
-            cards[2].style.marginRight     = '0.8rem';
-            cards[2].style.transform       = 'scale(0.92)';
-            cards[2].style.transformOrigin = 'top center';
-
-            // Mark as initialised (enables CSS transitions + pointer-events)
             panels.classList.add('stack-init');
 
-            // Insert expand button once
-            if (!expandBtn) {
+            // Show or create the expand button
+            if (expandBtn) {
+                expandBtn.style.display = '';
+                expandBtn.setAttribute('aria-expanded', 'false');
+                if (!expandBtn.isConnected) {
+                    panels.insertAdjacentElement('afterend', expandBtn);
+                }
+            } else {
                 expandBtn = document.createElement('button');
                 expandBtn.className = 'stack-expand-btn';
                 expandBtn.setAttribute('aria-expanded', 'false');
                 expandBtn.setAttribute('aria-label', 'View all services');
                 expandBtn.innerHTML =
                     'View All Services' +
-                    '&nbsp;<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
-                    'stroke-width="2.5" width="14" height="14" aria-hidden="true">' +
+                    '&nbsp;<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+                    ' stroke-width="2.5" width="14" height="14" aria-hidden="true">' +
                     '<polyline points="6 9 12 15 18 9"/></svg>';
                 panels.insertAdjacentElement('afterend', expandBtn);
                 expandBtn.addEventListener('click', openStack);
             }
         }
 
+        // ── Fan cards out (animated via CSS transition) ──────────
         function openStack() {
+            if (!panels.classList.contains('stack-init')) return;
+
             panels.classList.remove('stack-init');
             panels.classList.add('stack-open');
 
-            // Animate back to natural layout
             cards[0].style.position = '';
             cards[0].style.zIndex   = '';
 
-            cards[1].style.marginTop       = '';
-            cards[1].style.marginLeft      = '';
-            cards[1].style.marginRight     = '';
-            cards[1].style.transform       = '';
-            cards[1].style.transformOrigin = '';
-            cards[1].style.zIndex          = '';
-            cards[1].style.position        = '';
-            cards[1].style.pointerEvents   = '';
+            var props = ['marginTop','marginLeft','marginRight','transform','transformOrigin','zIndex','position'];
+            props.forEach(function(p) {
+                cards[1].style[p] = '';
+                cards[2].style[p] = '';
+            });
 
-            cards[2].style.marginTop       = '';
-            cards[2].style.marginLeft      = '';
-            cards[2].style.marginRight     = '';
-            cards[2].style.transform       = '';
-            cards[2].style.transformOrigin = '';
-            cards[2].style.zIndex          = '';
-            cards[2].style.position        = '';
-            cards[2].style.pointerEvents   = '';
-
-            // Fade out and remove the expand button
             if (expandBtn) {
                 expandBtn.setAttribute('aria-expanded', 'true');
-                expandBtn.style.opacity = '0';
-                var btn = expandBtn;
-                expandBtn = null;
-                setTimeout(function() { btn && btn.remove(); }, 400);
+                expandBtn.style.display = 'none';
             }
         }
 
-        // Tapping the stack itself also expands it
+        // ── Scroll observer: reveal on scroll down, re-stack on scroll up ──
+        function setupObserver() {
+            if (scrollObs) scrollObs.disconnect();
+
+            scrollObs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+                        // Stack scrolled 30 % into view → fan out
+                        openStack();
+                    } else if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
+                        // Fully out of view AND element is still below the viewport
+                        // = user scrolled back up above the section → re-stack
+                        buildStack();
+                    }
+                    // When scrolling PAST (top < 0) leave the cards expanded
+                });
+            }, { threshold: [0, 0.3] });
+
+            scrollObs.observe(panels);
+        }
+
+        // ── Clean up all stack state ─────────────────────────────
+        function destroyStack() {
+            if (scrollObs) { scrollObs.disconnect(); scrollObs = null; }
+            panels.classList.remove('stack-init', 'stack-open');
+            cards.forEach(function(c) { c.removeAttribute('style'); });
+            if (expandBtn) { expandBtn.remove(); expandBtn = null; }
+        }
+
+        // Tapping the stack also expands it (belt-and-braces)
         panels.addEventListener('click', function() {
             if (panels.classList.contains('stack-init')) openStack();
         });
 
-        // Init on mobile load
-        if (mq.matches) buildStack();
+        if (mq.matches) { buildStack(); setupObserver(); }
 
-        // Handle viewport resize (e.g. device rotation)
         mq.addEventListener('change', function(e) {
-            if (e.matches) {
-                buildStack();
-            } else {
-                // Back to desktop — remove all stack state
-                panels.classList.remove('stack-init', 'stack-open');
-                cards.forEach(function(c) { c.removeAttribute('style'); });
-                if (expandBtn) { expandBtn.remove(); expandBtn = null; }
-            }
+            if (e.matches) { buildStack(); setupObserver(); }
+            else            { destroyStack(); }
         });
     })();
 
