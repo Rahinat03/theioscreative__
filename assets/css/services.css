@@ -623,6 +623,10 @@
         gap: 3rem;
     }
 
+    .sp-group {
+        position: static;
+    }
+
     .service-panels {
         position: static;
     }
@@ -634,6 +638,68 @@
 
     .bundle-card {
         min-width: auto;
+    }
+
+    /* ── iOS notification-style card stack ─────── */
+    .service-panels.stack-init {
+        cursor: pointer;
+    }
+
+    /* Smooth animation when expanding */
+    .service-panels.stack-init .sp-card,
+    .service-panels.stack-open .sp-card {
+        transition: margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                    margin-left 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                    margin-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Hidden cards: non-interactive while stacked */
+    .service-panels.stack-init .sp-card:not(:first-child) {
+        pointer-events: none;
+        user-select: none;
+    }
+}
+
+/* Stack expand button — hidden on desktop, visible on mobile */
+.stack-expand-btn {
+    display: none;
+}
+
+@media (max-width: 968px) {
+    .stack-expand-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        margin-top: 0.75rem;
+        padding: 0.9rem 1.25rem;
+        background: transparent;
+        border: 1.5px solid rgba(48, 100, 96, 0.25);
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--teal-primary);
+        cursor: pointer;
+        transition: background 0.2s ease, border-color 0.2s ease, opacity 0.35s ease;
+    }
+
+    .stack-expand-btn:hover {
+        background: rgba(48, 100, 96, 0.06);
+        border-color: var(--teal-primary);
+    }
+
+    .stack-expand-btn svg {
+        flex-shrink: 0;
+        animation: stack-bounce 1.6s ease-in-out infinite;
+    }
+
+    @keyframes stack-bounce {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(3px); }
     }
 }
 
