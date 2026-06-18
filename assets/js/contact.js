@@ -144,4 +144,27 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('stage-error').textContent = '';
         });
     });
+
+    // ── FAQ Accordion ─────────────────────────────────────────
+    document.querySelectorAll('.faq-trigger').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+            var expanded = trigger.getAttribute('aria-expanded') === 'true';
+            var bodyId = trigger.getAttribute('aria-controls');
+            var body = document.getElementById(bodyId);
+
+            // Close all others
+            document.querySelectorAll('.faq-trigger').forEach(function(t) {
+                var bId = t.getAttribute('aria-controls');
+                var b = document.getElementById(bId);
+                t.setAttribute('aria-expanded', 'false');
+                if (b) b.style.maxHeight = '0';
+            });
+
+            // Toggle current
+            if (!expanded) {
+                trigger.setAttribute('aria-expanded', 'true');
+                if (body) body.style.maxHeight = body.scrollHeight + 'px';
+            }
+        });
+    });
 });

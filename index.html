@@ -48,11 +48,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/home.css" />
+  <link rel="stylesheet" href="assets/css/style.css?v=2" />
+  <link rel="stylesheet" href="assets/css/home.css?v=2" />
 </head>
 
 <body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- Page Transition -->
+  <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
 
   <!-- ── Navigation ─────────────────────────────────────── -->
   <nav class="navbar" id="navbar" aria-label="Main navigation">
@@ -89,7 +96,7 @@
   <main>
 
     <!-- ── HERO ───────────────────────────────────────────── -->
-    <section class="hero" id="home-hero" aria-label="Hero section">
+    <section class="hero noise" id="home-hero" aria-label="Hero section">
       <div class="hero-left">
         <div class="hero-content">
           <span class="eyebrow reveal">Strategy Meets Clarity</span>
@@ -213,6 +220,29 @@
       </div>
     </section>
 
+    <!-- ── MARQUEE TICKER ──────────────────────────────────── -->
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-item">Brand Identity <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Business Strategy <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Web Development <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Content Creation <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Company Registration <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Social Media <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Motion Graphics <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Market Analysis <span class="marquee-dot"></span></div>
+        <!-- Duplicate for seamless loop -->
+        <div class="marquee-item">Brand Identity <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Business Strategy <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Web Development <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Content Creation <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Company Registration <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Social Media <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Motion Graphics <span class="marquee-dot"></span></div>
+        <div class="marquee-item">Market Analysis <span class="marquee-dot"></span></div>
+      </div>
+    </div>
+
     <!-- ── MISSION – The Divine Excellence ───────────────── -->
     <section class="section section--off mission" id="home-mission">
       <div class="container">
@@ -234,21 +264,21 @@
               brand voice, and positioning you to compete at a global level.
             </p>
             <div class="mission-pillars">
-              <div class="pillar">
+              <div class="pillar reveal reveal-delay-1">
                 <div class="pillar-icon">◈</div>
                 <div>
                   <strong>Analytical</strong>
                   <span>Data-driven strategy that actually moves the needle.</span>
                 </div>
               </div>
-              <div class="pillar">
+              <div class="pillar reveal reveal-delay-2">
                 <div class="pillar-icon">◈</div>
                 <div>
                   <strong>Creative</strong>
                   <span>Visual worlds that captivate and convert.</span>
                 </div>
               </div>
-              <div class="pillar">
+              <div class="pillar reveal reveal-delay-3">
                 <div class="pillar-icon">◈</div>
                 <div>
                   <strong>Relentless</strong>
@@ -375,6 +405,108 @@
       </div>
     </section>
 
+    <!-- ── TESTIMONIALS ──────────────────────────────────────── -->
+<section class="section testimonials-section" aria-label="Client testimonials">
+  <div class="container">
+    <div class="section-header text-center reveal">
+      <span class="eyebrow">Client Stories</span>
+      <div class="divider divider--center"></div>
+      <h2>What Our Clients Say</h2>
+      <p>Real results. Real relationships. Real divine excellence.</p>
+    </div>
+  </div>
+  <div class="testi-track-wrap">
+    <div class="testi-track" id="testiTrack">
+      <!-- Card 1 -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Theios didn't just design our brand — they gave us an identity we're proud to stand behind. The strategy behind every decision made all the difference."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AB</div>
+          <div><span class="testi-name">Ama Boateng</span><span class="testi-company">The Brunch Box</span></div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"From registration to launch, they handled everything. We went from zero to a fully operational company with a website and brand system in 6 weeks."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">KM</div>
+          <div><span class="testi-name">Kofi Mensah</span><span class="testi-company">Roam Crew</span></div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Our store finally looks like a brand customers trust. The identity system they built works across everything — from signage to social media."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">EO</div>
+          <div><span class="testi-name">Emmanuel Owusu</span><span class="testi-company">Owners Own</span></div>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The website they built for us converted leads from day one. Clean, fast, and exactly on-brand. We've had clients specifically mention how professional our site looks."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SA</div>
+          <div><span class="testi-name">Serwaa Asante</span><span class="testi-company">Digital Startup</span></div>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The content they produced for our TikTok and Instagram doubled our engagement in the first month. They understand what the algorithm and audiences want."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">FD</div>
+          <div><span class="testi-name">Fatima Dankwa</span><span class="testi-company">Lifestyle Brand</span></div>
+        </div>
+      </div>
+      <!-- Duplicate for infinite loop -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Theios didn't just design our brand — they gave us an identity we're proud to stand behind. The strategy behind every decision made all the difference."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AB</div>
+          <div><span class="testi-name">Ama Boateng</span><span class="testi-company">The Brunch Box</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"From registration to launch, they handled everything. We went from zero to a fully operational company with a website and brand system in 6 weeks."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">KM</div>
+          <div><span class="testi-name">Kofi Mensah</span><span class="testi-company">Roam Crew</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Our store finally looks like a brand customers trust. The identity system they built works across everything — from signage to social media."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">EO</div>
+          <div><span class="testi-name">Emmanuel Owusu</span><span class="testi-company">Owners Own</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The website they built for us converted leads from day one. Clean, fast, and exactly on-brand. We've had clients specifically mention how professional our site looks."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SA</div>
+          <div><span class="testi-name">Serwaa Asante</span><span class="testi-company">Digital Startup</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The content they produced for our TikTok and Instagram doubled our engagement in the first month. They understand what the algorithm and audiences want."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">FD</div>
+          <div><span class="testi-name">Fatima Dankwa</span><span class="testi-company">Lifestyle Brand</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
     <!-- ── CTA BAND ────────────────────────────────────────── -->
     <section class="section section--teal cta-band" aria-label="Call to action">
       <div class="container text-center">
@@ -398,7 +530,7 @@
   </main>
 
   <!-- ── Footer ─────────────────────────────────────────────── -->
-  <footer class="footer" aria-label="Site footer">
+  <footer class="footer noise" aria-label="Site footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -458,6 +590,15 @@
     </div>
   </footer>
 
+  <!-- WhatsApp Floating Chat Button -->
+  <a href="https://wa.me/23324776829" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.552 4.103 1.516 5.829L.057 23.273a.75.75 0 00.92.92l5.444-1.459A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.695 9.695 0 01-4.952-1.355l-.355-.211-3.676.985.986-3.592-.229-.37A9.695 9.695 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+    </svg>
+    <span class="whatsapp-tooltip">Chat with us</span>
+  </a>
+
   <!-- Schema.org Structured Data -->
   <script type="application/ld+json">
   {
@@ -514,7 +655,7 @@
   }
   </script>
 
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=2"></script>
 </body>
 
 </html>

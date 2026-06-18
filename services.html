@@ -48,11 +48,60 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/services.css" />
+    <link rel="stylesheet" href="assets/css/style.css?v=2" />
+    <link rel="stylesheet" href="assets/css/services.css?v=2" />
+    <style>
+    /* Portfolio Case Study Modal — inline to bypass CDN cache */
+    .portfolio-item { cursor: pointer; }
+    .cs-modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(13,31,30,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      z-index: 2000; display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0s linear 0.35s;
+      padding: 1.5rem;
+    }
+    .cs-modal-backdrop.open { opacity: 1; visibility: visible; transition: opacity 0.35s ease; }
+    .cs-modal {
+      background: var(--teal-deeper); border: 1px solid rgba(78,205,196,0.2);
+      border-radius: var(--radius-lg); width: 100%; max-width: 760px;
+      max-height: 90vh; overflow-y: auto;
+      transform: translateY(30px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); position: relative;
+    }
+    .cs-modal-backdrop.open .cs-modal { transform: translateY(0) scale(1); }
+    .cs-modal-close {
+      position: absolute; top: 1.25rem; right: 1.25rem;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white); width: 2.25rem; height: 2.25rem; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; line-height: 1; transition: background 0.2s;
+    }
+    .cs-modal-close:hover { background: rgba(78,205,196,0.2); }
+    .cs-modal-img { width: 100%; height: 220px; object-fit: cover; border-radius: var(--radius-lg) var(--radius-lg) 0 0; display: block; }
+    .cs-modal-body { padding: 2rem 2.25rem 2.5rem; }
+    .cs-modal-category { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .cs-modal-title { font-family: var(--font-heading); font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700; color: var(--white); margin-bottom: 1rem; line-height: 1.15; }
+    .cs-modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; margin-bottom: 1.5rem; }
+    @media (max-width: 560px) { .cs-modal-grid { grid-template-columns: 1fr; } }
+    .cs-section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 0.35rem; }
+    .cs-section-value { font-size: 0.9rem; color: rgba(255,255,255,0.82); line-height: 1.6; }
+    .cs-modal-desc { font-size: 0.95rem; color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); }
+    .cs-modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .cs-modal-tags span { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: rgba(78,205,196,0.1); border: 1px solid rgba(78,205,196,0.2); border-radius: 50px; padding: 0.3rem 0.9rem; }
+    .cs-modal-cta { margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+    </style>
 </head>
 
 <body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+    <!-- Page Transition -->
+    <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
 
     <!-- Navigation -->
     <nav class="navbar scrolled" id="navbar" aria-label="Main navigation">
@@ -87,7 +136,7 @@
     <main>
 
         <!-- ── PAGE HERO ──────────────────────────────────────── -->
-        <section class="page-hero" aria-label="Services page hero">
+        <section class="page-hero noise" aria-label="Services page hero">
             <div class="container">
                 <div class="page-hero-content text-center">
                     <span class="eyebrow reveal">Services & Portfolio</span>
@@ -127,21 +176,21 @@
                             looking to expand internationally — <strong>we architect the path forward.</strong>
                         </p>
                         <div class="strategy-features reveal reveal-delay-2">
-                            <div class="sf-item">
+                            <div class="sf-item reveal reveal-delay-1">
                                 <div class="sf-icon">01</div>
                                 <div>
                                     <strong>Business Registration</strong>
                                     <span>Full-service company setup, governance, and compliance.</span>
                                 </div>
                             </div>
-                            <div class="sf-item">
+                            <div class="sf-item reveal reveal-delay-2">
                                 <div class="sf-icon">02</div>
                                 <div>
                                     <strong>Operational Strategy</strong>
                                     <span>Systems, processes, and frameworks for scalable growth.</span>
                                 </div>
                             </div>
-                            <div class="sf-item">
+                            <div class="sf-item reveal reveal-delay-3">
                                 <div class="sf-icon">03</div>
                                 <div>
                                     <strong>Market Analysis</strong>
@@ -153,7 +202,7 @@
 
                     <!-- Service Cards Side Panel -->
                     <div class="service-panels reveal reveal-delay-1">
-                        <div class="sp-card" id="identity">
+                        <div class="sp-card reveal" id="identity">
                             <div class="sp-num">01</div>
                             <h3>Identity</h3>
                             <p>Logo design, brand systems, typography, color palettes, and style guides. Every
@@ -161,7 +210,7 @@
                             <a href="contact.html" class="btn btn-ghost" id="identity-get-started"
                                 style="margin-top:1.5rem; font-size:0.8rem;">Get Started</a>
                         </div>
-                        <div class="sp-card sp-accent" id="content">
+                        <div class="sp-card sp-accent reveal reveal-delay-1" id="content">
                             <div class="sp-num" style="color:var(--teal-primary);">02</div>
                             <h3 style="color:var(--teal-deeper);">Content</h3>
                             <p style="color:var(--teal-dark);">Motion graphics, TikTok/Reels edits, corporate promo
@@ -169,7 +218,7 @@
                             <a href="contact.html" class="btn btn-primary" id="content-get-started"
                                 style="margin-top:1.5rem; font-size:0.8rem;">Get Started</a>
                         </div>
-                        <div class="sp-card" id="digital">
+                        <div class="sp-card reveal reveal-delay-2" id="digital">
                             <div class="sp-num">03</div>
                             <h3>Digital</h3>
                             <p>Full-stack websites built for performance, lead generation, and a lasting digital
@@ -208,7 +257,7 @@
                 <div class="portfolio-grid" id="portfolio-grid">
 
                     <!-- Brunch Box -->
-                    <article class="portfolio-item" data-category="branding identity" id="portfolio-brunchbox">
+                    <article class="portfolio-item reveal" data-category="branding identity" id="portfolio-brunchbox">
                         <div class="pi-image-wrap">
                             <img src="assets/images/portfolio_brunchbox.png"
                                 alt="The Brunch Box – luxury food delivery branding by Theios Creative"
@@ -235,7 +284,7 @@
                     </article>
 
                     <!-- Roam Crew -->
-                    <article class="portfolio-item" data-category="web" id="portfolio-roamcrew">
+                    <article class="portfolio-item reveal reveal-delay-1" data-category="web" id="portfolio-roamcrew">
                         <div class="pi-image-wrap">
                             <img src="assets/images/portfolio_roamcrew.png"
                                 alt="Roam Crew – custom web development by Theios Creative" loading="lazy" />
@@ -261,7 +310,7 @@
                     </article>
 
                     <!-- Owners Own -->
-                    <article class="portfolio-item" data-category="branding identity" id="portfolio-ownersown">
+                    <article class="portfolio-item reveal reveal-delay-2" data-category="branding identity" id="portfolio-ownersown">
                         <div class="pi-image-wrap">
                             <img src="assets/images/portfolio_ownersown.png"
                                 alt="Owners Own – retail branding by Theios Creative" loading="lazy" />
@@ -304,7 +353,7 @@
 
                 <div class="video-grid reveal reveal-delay-1">
                     <!-- Video 1 – Main Featured -->
-                    <div class="video-card video-card--main" id="video-corporate-promo">
+                    <div class="video-card video-card--main reveal" id="video-corporate-promo">
                         <div class="vc-thumbnail">
                             <img src="assets/images/about_team.png" alt="Corporate brand promo video thumbnail" />
                             <div class="vc-play" id="play-corporate" aria-label="Play corporate promo video">
@@ -322,7 +371,7 @@
                     </div>
 
                     <!-- Video 2 -->
-                    <div class="video-card" id="video-social-reel">
+                    <div class="video-card reveal reveal-delay-1" id="video-social-reel">
                         <div class="vc-thumbnail">
                             <img src="assets/images/portfolio_brunchbox.png" alt="Social media reel video thumbnail" />
                             <div class="vc-play" id="play-social" aria-label="Play social media reel">
@@ -340,7 +389,7 @@
                     </div>
 
                     <!-- Video 3 -->
-                    <div class="video-card" id="video-product-reel">
+                    <div class="video-card reveal reveal-delay-2" id="video-product-reel">
                         <div class="vc-thumbnail">
                             <img src="assets/images/portfolio_ownersown.png" alt="Product showcase video thumbnail" />
                             <div class="vc-play" id="play-product" aria-label="Play product showcase video">
@@ -363,6 +412,108 @@
                 </div>
             </div>
         </section>
+
+        <!-- ── TESTIMONIALS ──────────────────────────────────────── -->
+<section class="section testimonials-section" aria-label="Client testimonials">
+  <div class="container">
+    <div class="section-header text-center reveal">
+      <span class="eyebrow">Client Stories</span>
+      <div class="divider divider--center"></div>
+      <h2>What Our Clients Say</h2>
+      <p>Real results. Real relationships. Real divine excellence.</p>
+    </div>
+  </div>
+  <div class="testi-track-wrap">
+    <div class="testi-track" id="testiTrack">
+      <!-- Card 1 -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Theios didn't just design our brand — they gave us an identity we're proud to stand behind. The strategy behind every decision made all the difference."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AB</div>
+          <div><span class="testi-name">Ama Boateng</span><span class="testi-company">The Brunch Box</span></div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"From registration to launch, they handled everything. We went from zero to a fully operational company with a website and brand system in 6 weeks."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">KM</div>
+          <div><span class="testi-name">Kofi Mensah</span><span class="testi-company">Roam Crew</span></div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Our store finally looks like a brand customers trust. The identity system they built works across everything — from signage to social media."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">EO</div>
+          <div><span class="testi-name">Emmanuel Owusu</span><span class="testi-company">Owners Own</span></div>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The website they built for us converted leads from day one. Clean, fast, and exactly on-brand. We've had clients specifically mention how professional our site looks."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SA</div>
+          <div><span class="testi-name">Serwaa Asante</span><span class="testi-company">Digital Startup</span></div>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The content they produced for our TikTok and Instagram doubled our engagement in the first month. They understand what the algorithm and audiences want."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">FD</div>
+          <div><span class="testi-name">Fatima Dankwa</span><span class="testi-company">Lifestyle Brand</span></div>
+        </div>
+      </div>
+      <!-- Duplicate for infinite loop -->
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Theios didn't just design our brand — they gave us an identity we're proud to stand behind. The strategy behind every decision made all the difference."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AB</div>
+          <div><span class="testi-name">Ama Boateng</span><span class="testi-company">The Brunch Box</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"From registration to launch, they handled everything. We went from zero to a fully operational company with a website and brand system in 6 weeks."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">KM</div>
+          <div><span class="testi-name">Kofi Mensah</span><span class="testi-company">Roam Crew</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Our store finally looks like a brand customers trust. The identity system they built works across everything — from signage to social media."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">EO</div>
+          <div><span class="testi-name">Emmanuel Owusu</span><span class="testi-company">Owners Own</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The website they built for us converted leads from day one. Clean, fast, and exactly on-brand. We've had clients specifically mention how professional our site looks."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SA</div>
+          <div><span class="testi-name">Serwaa Asante</span><span class="testi-company">Digital Startup</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The content they produced for our TikTok and Instagram doubled our engagement in the first month. They understand what the algorithm and audiences want."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">FD</div>
+          <div><span class="testi-name">Fatima Dankwa</span><span class="testi-company">Lifestyle Brand</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
         <!-- ── PRICING HINT ─────────────────────────────────── -->
         <section class="section bundle-cta" aria-label="Full bundle offer">
@@ -394,10 +545,46 @@
             </div>
         </section>
 
+    <!-- ── Case Study Modal ─────────────────────────────────────── -->
+    <div class="cs-modal-backdrop" id="csModalBackdrop" role="dialog" aria-modal="true" aria-label="Project case study">
+      <div class="cs-modal" id="csModal">
+        <button class="cs-modal-close" id="csModalClose" aria-label="Close case study">&#x2715;</button>
+        <img class="cs-modal-img" id="csModalImg" src="" alt="" />
+        <div class="cs-modal-body">
+          <span class="cs-modal-category" id="csModalCategory"></span>
+          <h2 class="cs-modal-title" id="csModalTitle"></h2>
+          <p class="cs-modal-desc" id="csModalDesc"></p>
+          <div class="cs-modal-grid">
+            <div>
+              <span class="cs-section-label">Brief</span>
+              <p class="cs-section-value" id="csModalBrief"></p>
+            </div>
+            <div>
+              <span class="cs-section-label">Deliverables</span>
+              <p class="cs-section-value" id="csModalDeliverables"></p>
+            </div>
+            <div>
+              <span class="cs-section-label">Industry</span>
+              <p class="cs-section-value" id="csModalIndustry"></p>
+            </div>
+            <div>
+              <span class="cs-section-label">Result</span>
+              <p class="cs-section-value" id="csModalResult"></p>
+            </div>
+          </div>
+          <div class="cs-modal-tags" id="csModalTags"></div>
+          <div class="cs-modal-cta">
+            <a href="contact.html" class="btn btn-accent">Start a Similar Project</a>
+            <button class="btn btn-outline" id="csModalCloseBtn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     </main>
 
     <!-- Footer (shared) -->
-    <footer class="footer">
+    <footer class="footer noise">
         <div class="container">
             <div class="footer-grid">
                     <div class="footer-brand">
@@ -438,6 +625,15 @@
             </div>
         </div>
     </footer>
+
+  <!-- WhatsApp Floating Chat Button -->
+  <a href="https://wa.me/23324776829" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.552 4.103 1.516 5.829L.057 23.273a.75.75 0 00.92.92l5.444-1.459A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.695 9.695 0 01-4.952-1.355l-.355-.211-3.676.985.986-3.592-.229-.37A9.695 9.695 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+    </svg>
+    <span class="whatsapp-tooltip">Chat with us</span>
+  </a>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -560,8 +756,8 @@
     }
     </script>
 
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/services.js"></script>
+    <script src="assets/js/main.js?v=2"></script>
+    <script src="assets/js/services.js?v=2"></script>
 </body>
 
 </html>

@@ -423,6 +423,45 @@
     background: rgba(255, 255, 255, 0.05);
 }
 
+/* ── Marquee Ticker ─────────────────────────────────────────── */
+.marquee-strip {
+  background: var(--teal-primary);
+  padding: 0.85rem 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(78,205,196,0.15);
+  border-bottom: 1px solid rgba(78,205,196,0.15);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  white-space: nowrap;
+  padding: 0 2rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+}
+.marquee-item .marquee-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
 /* ── Responsive ──────────────────────────────────── */
 @media(max-width: 1100px) {
     .services-grid {
@@ -609,7 +648,7 @@
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  border: 1px solid rgba(78, 205, 196, 0.13);
+  border: 1.5px solid rgba(78, 205, 196, 0.30);
   transform: translate(-50%, -50%);
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -619,9 +658,9 @@
 /* Ring sizes */
 /* All CW — adjacent cards drift slowly apart instead of rushing together */
 .ring-1 { width: 205px;  height: 205px;  animation: ring-cw 22s  linear infinite -2.75s;   }
-.ring-2 { width: 335px;  height: 335px;  animation: ring-cw 35s  linear infinite -13.125s; border-color: rgba(78,205,196,0.13); }
-.ring-3 { width: 465px;  height: 465px;  animation: ring-cw 52s  linear infinite -32.5s;   border-color: rgba(78,205,196,0.10); }
-.ring-4 { width: 595px;  height: 595px;  animation: ring-cw 75s  linear infinite -65.625s; border-color: rgba(78,205,196,0.08); }
+.ring-2 { width: 335px;  height: 335px;  animation: ring-cw 35s  linear infinite -13.125s; border-color: rgba(78,205,196,0.25); }
+.ring-3 { width: 465px;  height: 465px;  animation: ring-cw 52s  linear infinite -32.5s;   border-color: rgba(78,205,196,0.20); }
+.ring-4 { width: 595px;  height: 595px;  animation: ring-cw 75s  linear infinite -65.625s; border-color: rgba(78,205,196,0.15); }
 
 @keyframes ring-cw  {
   from { transform: translate(-50%, -50%) rotate(0deg);    }

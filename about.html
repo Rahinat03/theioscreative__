@@ -48,11 +48,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/about.css" />
+    <link rel="stylesheet" href="assets/css/style.css?v=2" />
+    <link rel="stylesheet" href="assets/css/about.css?v=2" />
 </head>
 
 <body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+    <!-- Page Transition -->
+    <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
 
     <!-- Navigation -->
     <nav class="navbar scrolled" id="navbar" aria-label="Main navigation">
@@ -86,7 +93,7 @@
     <main>
 
         <!-- ── PAGE HERO ──────────────────────────────────────── -->
-        <section class="page-hero about-hero" aria-label="About page hero">
+        <section class="page-hero about-hero noise" aria-label="About page hero">
             <div class="container">
                 <div class="about-hero-grid">
                     <div class="about-hero-text">
@@ -186,9 +193,9 @@
                                 landscape, and goals. No assumptions — just thorough, honest discovery.
                             </p>
                             <ul class="ts-bullets">
-                                <li>Business model audit</li>
-                                <li>Market & competitor research</li>
-                                <li>Goal alignment workshop</li>
+                                <li class="reveal reveal-delay-1">Business model audit</li>
+                                <li class="reveal reveal-delay-2">Market & competitor research</li>
+                                <li class="reveal reveal-delay-3">Goal alignment workshop</li>
                             </ul>
                         </div>
                     </div>
@@ -216,9 +223,9 @@
                                 differentiate you in the market.
                             </p>
                             <ul class="ts-bullets">
-                                <li>Brand identity & logo design</li>
-                                <li>Digital assets & content creation</li>
-                                <li>Website design & development</li>
+                                <li class="reveal reveal-delay-1">Brand identity & logo design</li>
+                                <li class="reveal reveal-delay-2">Digital assets & content creation</li>
+                                <li class="reveal reveal-delay-3">Website design & development</li>
                             </ul>
                         </div>
                     </div>
@@ -248,9 +255,9 @@
                                 go-to-market strategy and social media deployment — we are there at the starting line.
                             </p>
                             <ul class="ts-bullets">
-                                <li>Business registration & compliance</li>
-                                <li>Market entry strategy</li>
-                                <li>Social media & brand launch</li>
+                                <li class="reveal reveal-delay-1">Business registration & compliance</li>
+                                <li class="reveal reveal-delay-2">Market entry strategy</li>
+                                <li class="reveal reveal-delay-3">Social media & brand launch</li>
                             </ul>
                         </div>
                     </div>
@@ -263,7 +270,7 @@
         <section class="section brand-philosophy" aria-label="Brand philosophy">
             <div class="container">
                 <div class="bp-inner reveal">
-                    <div class="bp-quote">
+                    <div class="bp-quote reveal reveal-delay-1">
                         <div class="bp-quote-mark" aria-hidden="true">"</div>
                         <blockquote>
                             We don't just make things look good.
@@ -315,9 +322,13 @@
                             <h3 class="team-name">Phoebe Patterson</h3>
                             <span class="team-role">Co-Founder &amp; Creative Director</span>
                             <div class="team-divider" aria-hidden="true"></div>
-                            <p class="team-bio">The creative force driving Theios's visual identity work. Phoebe brings
+                            <p class="team-bio reveal reveal-delay-1">The creative force driving Theios's visual identity work. Phoebe brings
                                 an eye for design that is both timeless and commercially sharp — turning brand concepts
                                 into experiences people remember.</p>
+                        </div>
+                        <div class="team-quote-reveal" aria-hidden="true">
+                            <p class="team-quote-text">Design is not decoration — it is the visual language of your brand's promise.</p>
+                            <span class="team-quote-attr">— Phoebe Patterson</span>
                         </div>
                     </div>
 
@@ -334,9 +345,13 @@
                             <h3 class="team-name">Rahinatu N.A Ako-Husnah</h3>
                             <span class="team-role">Co-Founder &amp; Strategy Lead</span>
                             <div class="team-divider" aria-hidden="true"></div>
-                            <p class="team-bio">The analytical engine behind every Theios strategy. Rahinatu ensures
+                            <p class="team-bio reveal reveal-delay-3">The analytical engine behind every Theios strategy. Rahinatu ensures
                                 creativity is grounded in business logic — from registration and operations to global
                                 market positioning.</p>
+                        </div>
+                        <div class="team-quote-reveal" aria-hidden="true">
+                            <p class="team-quote-text">Every great brand starts with a clear strategy. Creativity without direction is just noise.</p>
+                            <span class="team-quote-attr">— Rahinatu Ako-Husnah</span>
                         </div>
                     </div>
 
@@ -366,7 +381,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer noise">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
@@ -406,6 +421,15 @@
             </div>
         </div>
     </footer>
+
+  <!-- WhatsApp Floating Chat Button -->
+  <a href="https://wa.me/23324776829" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.552 4.103 1.516 5.829L.057 23.273a.75.75 0 00.92.92l5.444-1.459A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.695 9.695 0 01-4.952-1.355l-.355-.211-3.676.985.986-3.592-.229-.37A9.695 9.695 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+    </svg>
+    <span class="whatsapp-tooltip">Chat with us</span>
+  </a>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -473,7 +497,7 @@
     }
     </script>
 
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js?v=2"></script>
 </body>
 
 </html>

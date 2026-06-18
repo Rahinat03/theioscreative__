@@ -2,6 +2,34 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // ── Page Transition ───────────────────────────────────────────
+  const ptOverlay = document.getElementById('pageTransition');
+  if (ptOverlay) {
+    // Slide out on page load
+    ptOverlay.classList.add('slide-out');
+    ptOverlay.addEventListener('animationend', function handler() {
+      ptOverlay.classList.remove('slide-out');
+      ptOverlay.removeEventListener('animationend', handler);
+    });
+
+    // Intercept internal link clicks
+    document.querySelectorAll('a[href]').forEach(function(link) {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') ||
+          href.startsWith('tel:') || href.startsWith('http') ||
+          link.getAttribute('target') === '_blank') return;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const dest = href;
+        ptOverlay.classList.add('slide-in');
+        ptOverlay.addEventListener('animationend', function handler() {
+          ptOverlay.removeEventListener('animationend', handler);
+          window.location.href = dest;
+        });
+      });
+    });
+  }
+
   // ── Navbar scroll effect ─────────────────────────────────────
   const navbar = document.querySelector('.navbar');
   if (navbar) {
@@ -208,6 +236,124 @@ document.addEventListener('DOMContentLoaded', () => {
     if (href === currentPage || (currentPage === 'contact.html' && href === 'contact.html')) {
       mobileCtaButton.classList.add('active');
     }
+  }
+
+  // ── Custom Cursor ─────────────────────────────────────────────
+  const cursorDot  = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+
+  if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches) {
+    let ringX = 0, ringY = 0, dotX = 0, dotY = 0;
+    let mouseX = 0, mouseY = 0;
+
+    document.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dotX = mouseX;
+      dotY = mouseY;
+      cursorDot.style.left = dotX + 'px';
+      cursorDot.style.top  = dotY + 'px';
+    });
+
+    (function animRing() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top  = ringY + 'px';
+      requestAnimationFrame(animRing);
+    })();
+
+    const interactives = document.querySelectorAll('a, button, [role="button"], .orbit-card, .portfolio-item, .team-card, .service-card, input, textarea, select');
+    interactives.forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        cursorDot.classList.add('hovering');
+        cursorRing.classList.add('hovering');
+      });
+      el.addEventListener('mouseleave', function() {
+        cursorDot.classList.remove('hovering');
+        cursorRing.classList.remove('hovering');
+      });
+    });
+
+    document.addEventListener('mousedown', function() {
+      cursorDot.classList.add('clicking');
+      cursorRing.classList.add('clicking');
+    });
+    document.addEventListener('mouseup', function() {
+      cursorDot.classList.remove('clicking');
+      cursorRing.classList.remove('clicking');
+    });
+
+    document.addEventListener('mouseleave', function() {
+      cursorDot.style.opacity = '0';
+      cursorRing.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', function() {
+      cursorDot.style.opacity = '1';
+      cursorRing.style.opacity = '1';
+    });
+  }
+
+  // ── 3D Card Tilt ──────────────────────────────────────────────
+  const tiltCards = document.querySelectorAll('.service-card, .portfolio-item, .sp-card, .phil-card');
+
+  tiltCards.forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width  / 2;
+      const cy = rect.height / 2;
+      const rotX = ((y - cy) / cy) * -7;
+      const rotY = ((x - cx) / cx) *  7;
+      card.style.transform = 'perspective(800px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) translateZ(6px)';
+      // Edge glow
+      const glowX = (x / rect.width)  * 100;
+      const glowY = (y / rect.height) * 100;
+      card.style.backgroundImage = 'radial-gradient(circle at ' + glowX + '% ' + glowY + '%, rgba(78,205,196,0.07) 0%, transparent 65%)';
+    });
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = '';
+      card.style.backgroundImage = '';
+      card.style.transition = 'transform 0.5s ease, background-image 0.5s ease';
+      setTimeout(function() { card.style.transition = ''; }, 500);
+    });
+  });
+
+  // ── Typewriter Effect on Hero H1 ─────────────────────────────
+  const heroH1 = document.querySelector('.hero-headline, .page-hero h1, .contact-hero h1');
+  if (heroH1) {
+    heroH1.classList.add('typewriter-heading');
+    // Insert a cursor element after the heading
+    const cursor = document.createElement('span');
+    cursor.className = 'typewriter-cursor';
+    cursor.setAttribute('aria-hidden', 'true');
+    cursor.textContent = '|';
+    heroH1.insertAdjacentElement('afterend', cursor);
+    // Remove cursor after 3.5 seconds
+    setTimeout(function() {
+      cursor.style.opacity = '0';
+      cursor.style.transition = 'opacity 0.5s ease';
+      setTimeout(function() { cursor.remove(); }, 500);
+    }, 3500);
+  }
+
+  // ── Magnetic Buttons ─────────────────────────────────────────
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.querySelectorAll('.btn-accent, .btn-primary').forEach(function(btn) {
+      var strength = 0.3;
+      btn.addEventListener('mousemove', function(e) {
+        var rect = btn.getBoundingClientRect();
+        var x = e.clientX - (rect.left + rect.width  / 2);
+        var y = e.clientY - (rect.top  + rect.height / 2);
+        btn.style.transform = 'translate(' + (x * strength) + 'px, ' + (y * strength) + 'px)';
+      });
+      btn.addEventListener('mouseleave', function() {
+        btn.style.transform = '';
+        btn.style.transition = 'transform 0.45s cubic-bezier(0.23,1,0.32,1)';
+        setTimeout(function() { btn.style.transition = ''; }, 450);
+      });
+    });
   }
 
 });

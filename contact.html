@@ -48,11 +48,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/contact.css" />
+    <link rel="stylesheet" href="assets/css/style.css?v=2" />
+    <link rel="stylesheet" href="assets/css/contact.css?v=2" />
 </head>
 
 <body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+    <!-- Page Transition -->
+    <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
 
     <!-- Navigation -->
     <nav class="navbar scrolled" id="navbar" aria-label="Main navigation">
@@ -86,7 +93,7 @@
     <main>
 
         <!-- ── CONTACT HERO ───────────────────────────────────── -->
-        <section class="contact-hero" aria-label="Contact page hero">
+        <section class="contact-hero noise" aria-label="Contact page hero">
             <div class="container">
                 <div class="contact-hero-inner">
                     <div class="contact-hero-text">
@@ -102,7 +109,7 @@
 
                         <!-- Contact Info -->
                         <div class="contact-info reveal reveal-delay-3">
-                            <div class="ci-item">
+                            <div class="ci-item reveal">
                                 <div class="ci-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path
@@ -114,7 +121,7 @@
                                     <span>Available on request</span>
                                 </div>
                             </div>
-                            <div class="ci-item">
+                            <div class="ci-item reveal reveal-delay-1">
                                 <div class="ci-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path
@@ -127,7 +134,7 @@
                                     <span>info@theioscreative.com</span>
                                 </div>
                             </div>
-                            <div class="ci-item">
+                            <div class="ci-item reveal reveal-delay-2">
                                 <div class="ci-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path
@@ -146,13 +153,13 @@
                     <!-- ── LEAD FORM ──────────────────────────────── -->
                     <div class="contact-form-wrap reveal reveal-delay-1" id="full-bundle">
                         <form class="contact-form" id="contact-lead-form" novalidate aria-label="Contact lead form">
-                            <div class="cf-header">
+                            <div class="cf-header reveal">
                                 <h2>Start Your Project</h2>
                                 <p>Tell us about your business. We'll handle the rest.</p>
                             </div>
 
                             <!-- Full Name -->
-                            <div class="form-group">
+                            <div class="form-group reveal" style="transition-delay:0.05s;">
                                 <label for="contact-name">Full Name <span class="req" aria-hidden="true">*</span></label>
                                 <input type="text" id="contact-name" name="name" placeholder="Your full name" required
                                     autocomplete="name" />
@@ -160,14 +167,14 @@
                             </div>
 
                             <!-- Business name (if any) -->
-                            <div class="form-group">
+                            <div class="form-group reveal" style="transition-delay:0.1s;">
                                 <label for="contact-business">Business Name (if any)</label>
                                 <input type="text" id="contact-business" name="business" placeholder="Your business name"
                                     autocomplete="organization" />
                             </div>
 
                             <!-- Mobile number -->
-                            <div class="form-group">
+                            <div class="form-group reveal" style="transition-delay:0.15s;">
                                 <label for="contact-mobile">Mobile Number <span class="req" aria-hidden="true">*</span></label>
                                 <input type="tel" id="contact-mobile" name="mobile" placeholder="e.g. +1 555 123 4567" required
                                     autocomplete="tel" inputmode="tel" />
@@ -175,7 +182,7 @@
                             </div>
 
                             <!-- Email address -->
-                            <div class="form-group">
+                            <div class="form-group reveal" style="transition-delay:0.2s;">
                                 <label for="contact-email">Email Address <span class="req" aria-hidden="true">*</span></label>
                                 <input type="email" id="contact-email" name="email" placeholder="you@example.com" required
                                     autocomplete="email" />
@@ -183,7 +190,7 @@
                             </div>
 
                             <!-- What do you need -->
-                            <div class="form-group">
+                            <div class="form-group reveal" style="transition-delay:0.25s;">
                                 <label for="contact-service">What do you need help with? <span class="req" aria-hidden="true">*</span></label>
                                 <div class="select-wrap">
                                     <select id="contact-service" name="service" required>
@@ -204,14 +211,14 @@
                             </div>
 
                             <!-- Message -->
-                            <div class="form-group">
+                            <div class="form-group reveal" style="transition-delay:0.3s;">
                                 <label for="contact-message">Tell us more (optional)</label>
                                 <textarea id="contact-message" name="message" rows="4"
                                     placeholder="Describe your project, goals, or anything else you'd like us to know…"></textarea>
                             </div>
 
                             <!-- Current Stage -->
-                            <div class="form-group">
+                            <div class="form-group reveal" style="transition-delay:0.35s;">
                                 <label>Current Business Stage <span class="req" aria-hidden="true">*</span></label>
                                 <div class="stage-options" role="group" aria-label="Select your current business stage">
                                     <label class="stage-opt" for="stage-idea">
@@ -267,6 +274,81 @@
             </div>
         </section>
 
+        <!-- ── FAQ ──────────────────────────────────────────── -->
+        <section class="faq-section" id="faq" aria-label="Frequently asked questions">
+            <div class="container">
+                <div class="section-header text-center reveal" style="margin-bottom:3rem;">
+                    <span class="eyebrow">Got Questions?</span>
+                    <div class="divider divider--center"></div>
+                    <h2>Frequently Asked</h2>
+                    <p>Everything you need to know before we get started.</p>
+                </div>
+                <div class="faq-list" id="faqList">
+
+                    <div class="faq-item reveal">
+                        <button class="faq-trigger" aria-expanded="false" aria-controls="faq-1-body">
+                            How long does a typical project take?
+                            <span class="faq-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="faq-body" id="faq-1-body" role="region">
+                            <div class="faq-body-inner">
+                                Timelines vary by scope. A brand identity project typically takes 2–4 weeks. A full website build runs 3–6 weeks. The Full Bundle (strategy + identity + content + web) is typically 6–10 weeks depending on your responsiveness during feedback rounds. We share a detailed project timeline at the start of every engagement.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item reveal reveal-delay-1">
+                        <button class="faq-trigger" aria-expanded="false" aria-controls="faq-2-body">
+                            Do you work with international clients?
+                            <span class="faq-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="faq-body" id="faq-2-body" role="region">
+                            <div class="faq-body-inner">
+                                Absolutely. We operate globally and work with clients across Africa, Europe, the UK, and North America. All communication, feedback, and file delivery is handled remotely via email, video calls, and shared project platforms. Time zone differences are never a barrier — we build a communication rhythm that works for you.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item reveal reveal-delay-2">
+                        <button class="faq-trigger" aria-expanded="false" aria-controls="faq-3-body">
+                            What's included in the Full Bundle?
+                            <span class="faq-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="faq-body" id="faq-3-body" role="region">
+                            <div class="faq-body-inner">
+                                The Full Bundle covers everything: business registration &amp; compliance, full brand identity system (logo, colours, typography, guidelines), a social media content suite, and a professionally built website. It's our most comprehensive offering — designed for founders who want to launch or relaunch without having to coordinate multiple agencies. Pricing is custom-quoted based on your business stage and scope. <a href="#contact-lead-form">Enquire here</a>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item reveal reveal-delay-3">
+                        <button class="faq-trigger" aria-expanded="false" aria-controls="faq-4-body">
+                            How many revisions do I get?
+                            <span class="faq-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="faq-body" id="faq-4-body" role="region">
+                            <div class="faq-body-inner">
+                                Every project includes structured revision rounds — typically 2 rounds per deliverable. We've found this keeps projects moving efficiently while still giving you full control over the final outcome. Additional revision rounds can be added if needed. We'd rather get it right than rush it out.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item reveal reveal-delay-4">
+                        <button class="faq-trigger" aria-expanded="false" aria-controls="faq-5-body">
+                            Do you help with business registration outside Ghana?
+                            <span class="faq-icon" aria-hidden="true">+</span>
+                        </button>
+                        <div class="faq-body" id="faq-5-body" role="region">
+                            <div class="faq-body-inner">
+                                Yes. While we have deep expertise in Ghanaian company registration and compliance, we also assist clients with business setup in the UK, EU, and other jurisdictions through our network of verified legal and compliance partners. Tell us your target country in the form and we'll advise on the best path forward.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
         <!-- ── BIG CTA FOOTER BAND ────────────────────────────── -->
         <section class="section divine-cta" aria-label="Divine CTA section">
             <div class="container">
@@ -292,7 +374,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer noise">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
@@ -332,6 +414,15 @@
             </div>
         </div>
     </footer>
+
+  <!-- WhatsApp Floating Chat Button -->
+  <a href="https://wa.me/23324776829" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+    <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.552 4.103 1.516 5.829L.057 23.273a.75.75 0 00.92.92l5.444-1.459A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.695 9.695 0 01-4.952-1.355l-.355-.211-3.676.985.986-3.592-.229-.37A9.695 9.695 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+    </svg>
+    <span class="whatsapp-tooltip">Chat with us</span>
+  </a>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -399,8 +490,8 @@
     }
     </script>
 
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/contact.js"></script>
+    <script src="assets/js/main.js?v=2"></script>
+    <script src="assets/js/contact.js?v=2"></script>
 </body>
 
 </html>
