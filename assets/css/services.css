@@ -55,6 +55,12 @@
     gap: 1.2rem;
 }
 
+.sf-features-label {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(13, 31, 30, 0.1);
+    margin-bottom: 0.25rem;
+}
+
 .sf-item {
     display: flex;
     align-items: flex-start;
@@ -97,13 +103,49 @@
     color: var(--text-secondary);
 }
 
+/* Service Panel Group — labeled wrapper for the creative service cards */
+.sp-group {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sp-group-header {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(13, 31, 30, 0.1);
+    margin-bottom: 0.25rem;
+}
+
+.sp-group-eyebrow {
+    color: var(--accent) !important;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.sp-group-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    color: var(--teal-deeper);
+    line-height: 1.2;
+    margin: 0.4rem 0 0.5rem;
+}
+
+.sp-group-sub {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    max-width: 100%;
+    margin: 0;
+}
+
 /* Service Panels */
 .service-panels {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    position: sticky;
-    top: 6rem;
 }
 
 .sp-card {
