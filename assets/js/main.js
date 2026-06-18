@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Desktop nav — glass hover pill ──────────────────────────
   const navLinks = document.querySelector('.nav-links');
   if (navLinks) {
-    const links = navLinks.querySelectorAll('a');
+    const links = navLinks.querySelectorAll(':scope > li > a');
 
     const movePill = (target) => {
       const navRect  = navLinks.getBoundingClientRect();
