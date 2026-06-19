@@ -375,6 +375,192 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ================================================================
+   TESTIMONIALS — JS-driven auto-scroll + drag + touch + arrows
+   ================================================================ */
+(function initTestimonials() {
+  var tracks = document.querySelectorAll('.testi-track');
+  if (!tracks.length) return;
+
+  tracks.forEach(function(track) {
+    var wrap = track.parentElement; // .testi-track-wrap
+    if (!wrap) return;
+
+    var CARD_WIDTH = 340 + 24; // card width + gap (matches CSS)
+
+    // Hand off from CSS animation to JS-driven positioning
+    track.style.animation = 'none';
+    track.style.willChange = 'transform';
+
+    var currentX = 0;
+    var AUTO_SPEED = 0.45; // px per rAF tick (~27 px/sec at 60 fps)
+    var isDragging = false;
+    var isAnimating = false;
+    var autoScrollPaused = false;
+    var startMouseX = 0;
+    var startTranslate = 0;
+    var resumeTimer = null;
+
+    function halfWidth() {
+      return track.scrollWidth / 2;
+    }
+
+    function applyTranslate(x) {
+      currentX = x;
+      track.style.transform = 'translateX(' + x + 'px)';
+    }
+
+    function normalizeX(x) {
+      var half = halfWidth();
+      while (x <= -half) { x += half; }
+      while (x > 0)       { x -= half; }
+      return x;
+    }
+
+    function scheduleResume(delay) {
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(function() { autoScrollPaused = false; }, delay);
+    }
+
+    // ── Animation loop ─────────────────────────────────────────
+    (function loop() {
+      if (!isDragging && !autoScrollPaused && !isAnimating) {
+        currentX -= AUTO_SPEED;
+        var half = halfWidth();
+        if (currentX <= -half) { currentX += half; }
+        track.style.transform = 'translateX(' + currentX + 'px)';
+      }
+      requestAnimationFrame(loop);
+    })();
+
+    // ── Hover pause ────────────────────────────────────────────
+    wrap.addEventListener('mouseenter', function() {
+      if (!isDragging) { autoScrollPaused = true; clearTimeout(resumeTimer); }
+    });
+    wrap.addEventListener('mouseleave', function() {
+      if (!isDragging) { scheduleResume(0); }
+    });
+
+    // ── Mouse drag ─────────────────────────────────────────────
+    wrap.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      autoScrollPaused = true;
+      startMouseX = e.clientX;
+      startTranslate = currentX;
+      wrap.classList.add('dragging');
+      clearTimeout(resumeTimer);
+      e.preventDefault(); // prevent text selection
+    });
+
+    window.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      var dx = e.clientX - startMouseX;
+      applyTranslate(startTranslate + dx);
+    });
+
+    window.addEventListener('mouseup', function() {
+      if (!isDragging) return;
+      isDragging = false;
+      wrap.classList.remove('dragging');
+      currentX = normalizeX(currentX);
+      applyTranslate(currentX);
+      scheduleResume(1800);
+    });
+
+    // ── Touch swipe ────────────────────────────────────────────
+    var touchStartX = 0;
+    var touchStartTranslate = 0;
+
+    wrap.addEventListener('touchstart', function(e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartTranslate = currentX;
+      autoScrollPaused = true;
+      clearTimeout(resumeTimer);
+    }, { passive: true });
+
+    wrap.addEventListener('touchmove', function(e) {
+      var dx = e.touches[0].clientX - touchStartX;
+      applyTranslate(touchStartTranslate + dx);
+    }, { passive: true });
+
+    wrap.addEventListener('touchend', function() {
+      currentX = normalizeX(currentX);
+      applyTranslate(currentX);
+      scheduleResume(1800);
+    });
+
+    // ── Smooth scroll helper for arrow buttons ─────────────────
+    function smoothScrollTo(targetX) {
+      isAnimating = true;
+      autoScrollPaused = true;
+      var startVal = currentX;
+      var dist = targetX - startVal;
+      var duration = 380;
+      var startTime = null;
+
+      function animate(ts) {
+        if (!startTime) { startTime = ts; }
+        var elapsed = ts - startTime;
+        var progress = Math.min(elapsed / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        applyTranslate(startVal + dist * eased);
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          currentX = normalizeX(currentX);
+          applyTranslate(currentX);
+          isAnimating = false;
+          scheduleResume(1800);
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // ── Inject arrow buttons ───────────────────────────────────
+    var prevBtn = document.createElement('button');
+    prevBtn.className = 'testi-nav testi-nav--prev';
+    prevBtn.setAttribute('aria-label', 'Previous testimonial');
+    prevBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'testi-nav testi-nav--next';
+    nextBtn.setAttribute('aria-label', 'Next testimonial');
+    nextBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+
+    prevBtn.addEventListener('click', function() {
+      var half = halfWidth();
+      var targetX = currentX + CARD_WIDTH;
+      if (targetX > 0) {
+        // Boundary wrap: teleport to equivalent position then finish
+        currentX = targetX - half;
+        track.style.transform = 'translateX(' + currentX + 'px)';
+        scheduleResume(300);
+      } else {
+        smoothScrollTo(targetX);
+      }
+    });
+
+    nextBtn.addEventListener('click', function() {
+      var half = halfWidth();
+      var targetX = currentX - CARD_WIDTH;
+      if (targetX < -half) {
+        // Boundary wrap: teleport to equivalent position then finish
+        currentX = targetX + half;
+        track.style.transform = 'translateX(' + currentX + 'px)';
+        scheduleResume(300);
+      } else {
+        smoothScrollTo(targetX);
+      }
+    });
+
+    var controls = document.createElement('div');
+    controls.className = 'testi-controls';
+    controls.appendChild(prevBtn);
+    controls.appendChild(nextBtn);
+    wrap.parentElement.insertBefore(controls, wrap);
+  });
+})();
+
+/* ================================================================
    ORBIT UNIVERSE — Parallax, Connectors, Hover Effects
    ================================================================ */
 (function initOrbitUniverse() {

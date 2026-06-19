@@ -1068,6 +1068,68 @@ p {
   text-transform: uppercase;
 }
 
+/* ── Testimonials — Interactive Navigation Controls ─────────── */
+.testi-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-right: 0.5rem;
+}
+
+.testi-nav {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(78, 205, 196, 0.08);
+  border: 1px solid rgba(78, 205, 196, 0.22);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+  flex-shrink: 0;
+}
+
+.testi-nav:hover {
+  background: rgba(78, 205, 196, 0.18);
+  border-color: rgba(78, 205, 196, 0.5);
+  transform: scale(1.08);
+}
+
+.testi-nav:active {
+  transform: scale(0.95);
+}
+
+.testi-track-wrap {
+  cursor: grab;
+  user-select: none;
+}
+
+.testi-track-wrap.dragging {
+  cursor: grabbing;
+}
+
+/* ── Hero Text Shadows — depth on dark hero backgrounds ─────── */
+.hero h1,
+.hero .lead,
+.page-hero h1,
+.page-hero .lead,
+.contact-hero h1,
+.contact-hero .lead,
+.sp-page-hero h1,
+.sp-page-hero .lead {
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35), 0 1px 6px rgba(0, 0, 0, 0.2);
+}
+
+.hero .eyebrow,
+.page-hero .eyebrow,
+.contact-hero .eyebrow,
+.sp-page-hero .eyebrow {
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+
 /* ── Desktop nav dropdown ───────────────────────────────── */
 .nav-dropdown-parent {
     position: relative;
@@ -1150,6 +1212,17 @@ p {
 /* Remove the underline indicator for dropdown items */
 .nav-dropdown a::after {
     display: none !important;
+}
+
+/* Invisible bridge — fills the gap between trigger and panel so
+   hovering through that gap keeps .nav-dropdown-parent:hover alive */
+.nav-dropdown::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: -8px;
+    right: -8px;
+    height: calc(0.75rem + 4px);
 }
 
 /* Mobile: hide desktop dropdown, show chevron-less link */
